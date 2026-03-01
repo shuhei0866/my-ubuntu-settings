@@ -18,6 +18,10 @@ gsettings set org.gnome.desktop.wm.keybindings switch-windows-backward "['<Contr
 gsettings set org.gnome.desktop.wm.keybindings switch-input-source "['<Control>space']"
 gsettings set org.gnome.desktop.wm.keybindings switch-input-source-backward "['<Shift><Control>space']"
 
+# アプリ切り替え: Alt+Tab (keyd の swap(command_tab) 経由で Cmd+Tab → Alt+Tab)
+gsettings set org.gnome.desktop.wm.keybindings switch-applications "['<Alt>Tab']"
+gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward "['<Shift><Alt>Tab']"
+
 # toggle-overview を無効化 (keyd command レイヤーとの競合回避)
 gsettings set org.gnome.shell.keybindings toggle-overview "[]"
 
