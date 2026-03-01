@@ -22,7 +22,8 @@ gsettings set org.gnome.desktop.wm.keybindings switch-input-source-backward "['<
 gsettings set org.gnome.desktop.wm.keybindings switch-applications "['<Alt>Tab']"
 gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward "['<Shift><Alt>Tab']"
 
-# toggle-overview を無効化 (keyd command レイヤーとの競合回避)
-gsettings set org.gnome.shell.keybindings toggle-overview "[]"
+# toggle-overview: ジェスチャーから呼び出すために Super+F12 を割り当て
+# (Super 単押しは keyd command レイヤーと競合するため使えない)
+gsettings set org.gnome.shell.keybindings toggle-overview "['<Super>F12']"
 
 echo "Done."
