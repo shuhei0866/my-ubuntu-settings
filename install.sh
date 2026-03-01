@@ -10,23 +10,23 @@ echo "=== my-ubuntu-settings installer ==="
 echo ""
 
 # --- パッケージインストール ---
-echo "[1/5] Installing packages..."
+echo "[1/6] Installing packages..."
 sudo apt-get update -qq
 sudo apt-get install -y keyd libinput-gestures xdotool
 
 # --- keyd 設定 ---
-echo "[2/5] Setting up keyd..."
+echo "[2/6] Setting up keyd..."
 sudo cp "$SCRIPT_DIR/keyd/default.conf" /etc/keyd/default.conf
 sudo systemctl enable keyd
 sudo systemctl restart keyd
 echo "  keyd configured and restarted."
 
 # --- GNOME キーバインド ---
-echo "[3/5] Applying GNOME keybindings..."
+echo "[3/6] Applying GNOME keybindings..."
 bash "$SCRIPT_DIR/gnome/apply.sh"
 
 # --- ジェスチャー ---
-echo "[4/5] Setting up gestures..."
+echo "[4/6] Setting up gestures..."
 mkdir -p ~/.config
 cp "$SCRIPT_DIR/gestures/libinput-gestures.conf" ~/.config/libinput-gestures.conf
 mkdir -p ~/.config/autostart
@@ -36,7 +36,7 @@ libinput-gestures-setup restart 2>/dev/null || libinput-gestures-setup start 2>/
 echo "  gestures configured."
 
 # --- シェル設定 ---
-echo "[5/5] Setting up shell configs..."
+echo "[5/6] Setting up shell configs..."
 
 # .zpreztorc
 if [ -f ~/.zpreztorc ]; then
@@ -68,10 +68,19 @@ else
     echo "    git clone --recursive https://github.com/sorin-ionescu/prezto.git \"\${ZDOTDIR:-\$HOME}/.zprezto\""
 fi
 
+# --- udev ルール（libinput-gestures 自動再起動） ---
+echo "[6/6] Setting up udev rules for libinput-gestures auto-restart..."
+sudo cp "$SCRIPT_DIR/udev/restart-libinput-gestures.sh" /usr/local/bin/restart-libinput-gestures
+sudo chmod +x /usr/local/bin/restart-libinput-gestures
+sudo cp "$SCRIPT_DIR/udev/99-libinput-gestures-restart.rules" /etc/udev/rules.d/
+sudo udevadm control --reload-rules
+echo "  udev rules configured."
+
 echo ""
 echo "=== Setup complete ==="
 echo "Notes:"
 echo "  - keyd is active. Test Cmd+C, Cmd+V, Cmd+Tab, Cmd+Q, Cmd+Space"
 echo "  - GNOME keybindings applied. Test Ctrl+Left/Right for workspace switching"
 echo "  - Gestures active. Test 3-finger swipe for browser back/forward"
+echo "  - udev rules active. libinput-gestures will auto-restart on trackpad reconnect"
 echo "  - Log out and back in for all changes to take full effect"

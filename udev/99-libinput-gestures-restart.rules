@@ -1,0 +1,2 @@
+# Restart libinput-gestures when a touchpad device is connected
+ACTION=="add", SUBSYSTEM=="input", ENV{ID_INPUT_TOUCHPAD}=="1", TAG+="systemd", RUN+="/bin/systemd-run --no-block /usr/local/bin/restart-libinput-gestures"
