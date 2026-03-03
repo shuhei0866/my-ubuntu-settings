@@ -26,4 +26,12 @@ gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward "['<
 # (Super 単押しは keyd command レイヤーと競合するため使えない)
 gsettings set org.gnome.shell.keybindings toggle-overview "['<Super>F12']"
 
+# スクリーンショット: Mac 風 (Cmd+Shift+3/4/5 → keyd 経由で Ctrl+Shift+3/4/5)
+# Cmd+Shift+3 → 全画面スクショ（即保存）
+gsettings set org.gnome.shell.keybindings screenshot "['<Ctrl><Shift>3']"
+# Cmd+Shift+4 → スクショUI（範囲選択）
+gsettings set org.gnome.shell.keybindings show-screenshot-ui "['<Ctrl><Shift>4']"
+# Cmd+Shift+5 → 画面録画UI
+gsettings set org.gnome.shell.keybindings show-screen-recording-ui "['<Ctrl><Shift>5']"
+
 echo "Done."
